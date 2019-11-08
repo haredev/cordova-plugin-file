@@ -733,18 +733,19 @@
 
 // fix errors that base on Alexsander Akers from http://stackoverflow.com/a/5998683/2613194
 - (NSString*) mimeTypeForFileAtPath: (NSString *) path {
-    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        return nil;
-    }
-    
-    CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)[path pathExtension], NULL);
-    CFStringRef mimeType = UTTypeCopyPreferredTagWithClass (UTI, kUTTagClassMIMEType);
-    CFRelease(UTI);
-    
-    if (!mimeType) {
+    // Workaround iOS 11 + 12 ZIP import
+    //if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+    //    return nil;
+    //}
+    //
+    //CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)[path pathExtension], NULL);
+    //CFStringRef mimeType = UTTypeCopyPreferredTagWithClass (UTI, kUTTagClassMIMEType);
+    //CFRelease(UTI);
+    //
+    //if (!mimeType) {
         return @"application/octet-stream";
-    }
-    return (__bridge NSString *)mimeType;
+    //}
+    //return (__bridge NSString *)mimeType;
 }
 
 @end
